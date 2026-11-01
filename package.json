@@ -1,0 +1,14 @@
+{
+  "name": "pi-termux-notify",
+  "version": "1.0.0",
+  "description": "Pi extension: Termux notification hooks (agent settled / prompt / long tool) with notification-button approval for dangerous commands.",
+  "keywords": ["pi-package", "pi", "extension", "termux", "notification", "notify"],
+  "license": "MIT",
+  "pi": {
+    "extensions": ["./extensions/termux-notify.ts"]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
+  },
+  "files": ["extensions", "README.md", "LICENSE"]
+}
