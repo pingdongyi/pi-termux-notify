@@ -152,19 +152,17 @@ export default function (pi: ExtensionAPI) {
 				: lastOutcome === "error"
 					? "Pi 运行出错"
 					: "Pi 任务完成";
-		const content =
-			lastOutcome === "aborted"
-				? "用户已中止会话"
-				: lastOutcome === "error"
-					? "运行出错，等待你的输入"
-					: "等待你的输入";
-		// 中止时按钮改为「继续会话」；其他情况为「查看」。点击只前置 Termux，不弹多余 toast。
-		const button = lastOutcome === "aborted" ? "继续会话" : "查看";
-		notify(
-			title,
-			content,
-			["--button1", button, "--button1-action", frontTermux(":")],
-		);
+		// 正常完成/出错：只显示标题，不带「等待你的输入」提示，也不需要「查看」按钮；
+		// 点击通知主体仍会前置 Termux（notify 默认行为）。
+		if (lastOutcome === "aborted") {
+			notify(
+				title,
+				"用户已中止会话",
+				["--button1", "继续会话", "--button1-action", frontTermux(":")],
+			);
+			return;
+		}
+		notify(title, "");
 	});
 
 	// 2) Pi 弹出交互对话框（其他扩展的审批/确认/输入）时通知。

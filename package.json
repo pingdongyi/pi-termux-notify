@@ -1,6 +1,6 @@
 {
   "name": "pi-termux-notify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Pi extension: Termux notification hooks (agent settled / prompt / long tool) with notification-button approval for dangerous commands.",
   "keywords": ["pi-package", "pi", "extension", "termux", "notification", "notify"],
   "license": "MIT",
