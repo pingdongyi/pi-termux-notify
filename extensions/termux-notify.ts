@@ -57,9 +57,11 @@ const APPROVE_PATTERNS = (
  * 只有没有按钮时，才给通知主体加 --action（点击主体时前置 Termux 窗口）；
  * 有按钮时靠按钮操作，不给主体加 action，避免冲突。
  */
-function notify(title: string, content: string, buttons: string[] = []): void {
+function notify(title: string, content: string, buttons: string[] = [], alert = false): void {
 	if (DISABLED) return;
 	const args = ["-t", title, "-c", content, "--priority", PRIORITY, "-i", NOTIFY_ID];
+	// 审批等需要用户响应的关键通知：带提示音和震动，避免错过。
+	if (alert) args.push("--sound", "--vibrate", "500,1000,200");
 	if (buttons.length > 0) {
 		args.push(...buttons);
 	} else {
@@ -133,6 +135,7 @@ function notifyApproval(command: string): void {
 			"--button2", "拒绝", "--button2-action", writeNo,
 			"--ongoing",
 		],
+		true,
 	);
 }
 
@@ -178,6 +181,7 @@ export default function (pi: ExtensionAPI) {
 			`Pi ${kindLabel[event.kind] ?? "等待操作"}`,
 			event.title ?? "请回到 Pi 会话处理",
 			["--button1", "去处理", "--button1-action", frontTermux(":")],
+			event.kind === "confirm", // 审批/确认类弹窗：带提示音和震动。
 		);
 	});
 

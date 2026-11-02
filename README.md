@@ -9,6 +9,12 @@ Termux API (`termux-notification`):
 - `tool_call` — route dangerous-command approvals to notification buttons (approve/reject),
   so you don't need to switch back to the terminal.
 
+## Approval alerts (sound + vibration)
+
+The approval/confirmation notifications (dangerous-command approval via `Pi 需要审批`
+buttons, and `confirm`-type UI prompts) play a sound and vibrate, so you don't miss a
+pending approval. Other notifications (task done, long tool) stay silent.
+
 ## Install
 
 ```bash
